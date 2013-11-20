@@ -50,8 +50,7 @@ var createSignalingChannel = function () {
 
 
 var signalingChannel = createSignalingChannel();
-var peerConnection;
-var remoteStream;
+var peerConnection, localStream, remoteStream;
 
 var iceServers = {'iceServers': [{url: 'stun:stun.l.google.com:19302'}]};
 var optionalRtpDataChannels = { 'optional': [{'DtlsSrtpKeyAgreement': true}, {'RtpDataChannels': true }] };
@@ -94,9 +93,10 @@ function start(isCaller) {
 
     // get the local stream, show it in the local video element and send it
     getUserMedia({ "audio": feature.audio, "video": feature.video }, function (stream) {
-      selfView.src = URL.createObjectURL(stream);
+      localStream = stream;
+      selfView.src = URL.createObjectURL(localStream);
       console.log('adding stream');
-      peerConnection.addStream(stream, errorLog);
+      peerConnection.addStream(localStream, errorLog);
       if (isCaller) {
         peerConnection.createOffer(gotDescription);
       } else {
