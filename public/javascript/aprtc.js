@@ -1,5 +1,5 @@
 var feature = {
-  video: true,
+  video: false,
   audio: false,
   data: true
 }
