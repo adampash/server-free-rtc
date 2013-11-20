@@ -141,7 +141,6 @@ function consumeOffer(messages) {
         if (message.sdp.type == 'offer' && !feature.video) {
           peerConnection.createAnswer(gotDescription, errorLog);
         }
-        console.log(peerConnection.messageingState);
       } else if (message.candidate) {
         peerConnection.addIceCandidate(new RTCIceCandidate(message.candidate));
       }
