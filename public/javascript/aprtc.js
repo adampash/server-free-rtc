@@ -100,15 +100,15 @@ function start(isCaller) {
       console.log('adding stream');
       peerConnection.addStream(localStream, errorLog);
       if (isCaller) {
-        peerConnection.createOffer(gotDescription);
+        peerConnection.createOffer(gotDescription, errorLog);
       } else {
-        peerConnection.createAnswer(gotDescription);
+        peerConnection.createAnswer(gotDescription, errorLog);
       }
     }, errorLog);
   }
 
   if (isCaller && !feature.video) {
-    peerConnection.createOffer(gotDescription);
+    peerConnection.createOffer(gotDescription, errorLog);
   }
 
 }
