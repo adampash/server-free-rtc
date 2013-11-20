@@ -51,6 +51,7 @@ var createSignalingChannel = function () {
 
 var signalingChannel = createSignalingChannel();
 var peerConnection;
+var remoteStream;
 
 var iceServers = {'iceServers': [{url: 'stun:stun.l.google.com:19302'}]};
 var optionalRtpDataChannels = { 'optional': [{'DtlsSrtpKeyAgreement': true}, {'RtpDataChannels': true }] };
@@ -87,7 +88,8 @@ function start(isCaller) {
     // once remote stream arrives, show it in the remote video element
     peerConnection.onaddstream = function (evt) {
       console.log('a stream was just added');
-      remoteView.src = URL.createObjectURL(evt.stream);
+      remoteStream = evt.stream;
+      remoteView.src = URL.createObjectURL(remoteStream);
     };
 
     // get the local stream, show it in the local video element and send it
