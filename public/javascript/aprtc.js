@@ -88,13 +88,15 @@ function start(isCaller) {
     peerConnection.onaddstream = function (evt) {
       console.log('a stream was just added');
       remoteStream = evt.stream;
-      remoteView.src = URL.createObjectURL(remoteStream);
+      attachMediaStream(remoteView, remoteStream);
+      // remoteView.src = URL.createObjectURL(remoteStream);
     };
 
     // get the local stream, show it in the local video element and send it
     getUserMedia({ "audio": feature.audio, "video": feature.video }, function (stream) {
       localStream = stream;
-      selfView.src = URL.createObjectURL(localStream);
+      attachMediaStream(selfView, localStream);
+      // selfView.src = URL.createObjectURL(localStream);
       console.log('adding stream');
       peerConnection.addStream(localStream, errorLog);
       if (isCaller) {
@@ -102,7 +104,7 @@ function start(isCaller) {
       } else {
         peerConnection.createAnswer(gotDescription);
       }
-    });
+    }, errorLog);
   }
 
   if (isCaller && !feature.video) {
